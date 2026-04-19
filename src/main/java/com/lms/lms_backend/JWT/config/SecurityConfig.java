@@ -1,6 +1,5 @@
-package com.lms.lms_backend.config;
+package com.lms.lms_backend.JWT.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +23,12 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/api/v1/auth/**")
-                                .permitAll().anyRequest().authenticated()
+                        auth -> auth
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/admin/**").permitAll()
+//                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
+
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy

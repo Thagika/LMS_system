@@ -1,6 +1,6 @@
-package com.lms.lms_backend.auth;
+package com.lms.lms_backend.JWT.auth;
 
-import com.lms.lms_backend.config.JwtService;
+import com.lms.lms_backend.JWT.config.JwtService;
 import com.lms.lms_backend.user.Role;
 import com.lms.lms_backend.user.User;
 import com.lms.lms_backend.user.UserRepository;
@@ -26,6 +26,7 @@ public class authenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .isActive(true)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);

@@ -1,4 +1,4 @@
-package com.lms.lms_backend.config;
+package com.lms.lms_backend.JWT.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package com.lms.lms_backend.config;
+package com.lms.lms_backend.JWT.config;
 
 import com.lms.lms_backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;

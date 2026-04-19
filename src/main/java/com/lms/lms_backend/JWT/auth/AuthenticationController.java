@@ -1,4 +1,4 @@
-package com.lms.lms_backend.auth;
+package com.lms.lms_backend.JWT.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
