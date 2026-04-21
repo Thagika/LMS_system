@@ -22,6 +22,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUserRole());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
+        return ResponseEntity.ok(userService.findUserById(id));
+    }
+
     @PutMapping("/{userId}/role")
     public ResponseEntity<Void> assignRole(
             @PathVariable UUID userId,

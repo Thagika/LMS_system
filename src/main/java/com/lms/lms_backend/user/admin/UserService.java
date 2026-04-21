@@ -20,15 +20,35 @@ public class UserService {
     private final UserRepository repository;
 
     public @Nullable List<UserResponse> findAllUserRole() {
-        return repository.findByRole(Role.USER);
+            return repository.findByRoleAndIsActiveTrue(Role.USER)
+                    .stream()
+                    .map(user -> UserResponse.builder()
+                            .id(user.getId())
+                            .firstname(user.getFirstName())
+                            .lastname(user.getLastName())
+                            .email(user.getEmail())
+                            .build())
+                    .toList();
     }
 
     public void assignRole(UUID userId, Role role) {
-        User user = repository.findById(userId)
+        User user = repository.findByIdAndIsActiveTrue(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         user.setRole(role);
         repository.save(user);
+    }
+
+    public UserResponse findUserById(UUID id) {
+        User user = repository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstname(user.getFirstName())
+                .lastname(user.getLastName())
+                .email(user.getEmail())
+                .build();
     }
 
 }

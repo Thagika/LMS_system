@@ -1,5 +1,7 @@
 package com.lms.lms_backend.JWT.auth;
 
+import com.lms.lms_backend.ExceptionHandler.EmailAlreadyExistsException;
+import com.lms.lms_backend.ExceptionHandler.UserNotFoundException;
 import com.lms.lms_backend.JWT.config.JwtService;
 import com.lms.lms_backend.user.Role;
 import com.lms.lms_backend.user.User;
@@ -18,11 +20,16 @@ public class authenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    public AuthenticationResponse register(RegisterRequest request) {
+
+    public AuthenticationResponse register(RegisterRequest request) throws EmailAlreadyExistsException {
+
+        if (repository.existsByEmail(request.getEmail())) {
+            throw new EmailAlreadyExistsException("The email " + request.getEmail() + " is already registered.");
+        }
 
         var user = User.builder()
-                .first_name(request.getFirstname())
-                .last_name(request.getLastname())
+                .firstName(request.getFirstname())
+                .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
@@ -39,7 +46,9 @@ public class authenticationService {
                         request.getEmail(), request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+        var user = repository.findByEmailAndIsActiveTrue(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Account is inactive or does not exist."));
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
