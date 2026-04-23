@@ -18,14 +18,12 @@ public class CourseController {
     // 1. Get all courses
     @GetMapping
     public ResponseEntity<List<CourseResponse>> getAllCourses() {
-        List<CourseResponse> courses = courseService.getAllCourses();
-        return ResponseEntity.ok(courses);
+        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     // 2. Get a single course by ID
     @GetMapping("/{id}")
-    public ResponseEntity<CourseResponse> getCourseById(@PathVariable Integer id) {
-        CourseResponse course = courseService.getCourseById(id);
-        return ResponseEntity.ok(course);
+    public CourseResponse getCourseById(@PathVariable Integer id) {
+        return courseService.getCourseById(id);
     }
 }

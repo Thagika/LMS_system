@@ -24,4 +24,8 @@ public class LecturerCourse {
     @ManyToOne
     @JoinColumn(name = "course_id")  // Points to Course table
     private Course course;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean isActive;
+
 }

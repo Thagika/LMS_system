@@ -1,17 +1,22 @@
 package com.lms.lms_backend.Courses.LecturerCourse;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LecturerCourseRepository extends JpaRepository<LecturerCourse , Integer> {
-    List<LecturerCourse> findByCourseId(Integer courseId);
+    List<LecturerCourse> findAllByIsActiveTrue();
 
-    List<LecturerCourse> findByLecturerId(UUID lecturerId);
+    List<LecturerCourse> findAllByIsActiveFalse();
 
-    boolean existsByLecturerIdAndCourseId(UUID lecturerId, Integer courseId);
+    Optional<LecturerCourse> findByIdAndIsActiveTrue(Integer id);
+    @Modifying
+    @Query("UPDATE LecturerCourse lc SET lc.isActive = false WHERE lc.course.id = :courseId AND lc.isActive = true")
+    void deactivateByCourseId(Integer courseId);
 
-    // 4. Remove a lecturer from a course
-    void deleteByLecturerIdAndCourseId(UUID lecturerId, Integer courseId);
+    boolean existsByLecturerIdAndCourseIdAndIsActiveTrue(UUID id, Integer id1);
 }

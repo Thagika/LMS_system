@@ -9,11 +9,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/admin/courses")
 @RequiredArgsConstructor
 public class CourseAdminController {
     private final CourseAdminService service;
+
+    @GetMapping
+    public ResponseEntity<List<CourseResponse>> getAllDisabledCourses() {
+        List<CourseResponse> courses = service.getAllDisabledCourses();
+        return ResponseEntity.ok(courses);
+    }
 
     @PostMapping
     public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CreateRequest request) {
@@ -32,14 +40,15 @@ public class CourseAdminController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(
             @PathVariable Integer id,
-            @RequestParam(defaultValue = "false") boolean confirmed) {
-        service.deleteCourse(id, confirmed);
+            @RequestParam boolean confirmed) {
+        service.disableCourse(id, confirmed);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/assign-lecturer")
-    public ResponseEntity<Void> assignLecturer(@RequestBody AssignRequest request) {
-        service.assignExistingLectuererExistingCourse(request);
-        return ResponseEntity.ok().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> enableCourse(
+            @PathVariable Integer id) {
+        service.enableCourse(id);
+        return ResponseEntity.noContent().build();
     }
 }

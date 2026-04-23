@@ -4,6 +4,8 @@ import com.lms.lms_backend.Courses.CourseResponse;
 import com.lms.lms_backend.Courses.CourseService;
 import com.lms.lms_backend.Courses.CreateRequest;
 
+import java.util.List;
+
 public interface CourseAdminService extends CourseService {
         /**
      * Creates a new course record.
@@ -27,9 +29,9 @@ public interface CourseAdminService extends CourseService {
      * @param id The UUID of the course to remove.
      * @param confirmed A flag to ensure the deletion is intentional.
      */
-    void deleteCourse(Integer id, boolean confirmed);
+    void disableCourse(Integer id, boolean confirmed);
+    
+    void enableCourse(Integer id);
 
-
-    void assignExistingLectuererExistingCourse(AssignRequest request);
-
+    List<CourseResponse> getAllDisabledCourses();
 }

@@ -1,13 +1,15 @@
 package com.lms.lms_backend.Courses.Admin;
 
 import com.lms.lms_backend.Courses.*;
-import com.lms.lms_backend.Courses.LecturerCourse.LecturerCourse;
 import com.lms.lms_backend.Courses.LecturerCourse.LecturerCourseRepository;
-import com.lms.lms_backend.user.Role;
-import com.lms.lms_backend.user.User;
+import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.user.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 
 @Service
@@ -20,11 +22,19 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
 
         super(repository);
         this.lecturerCourseRepository = lecturerCourseRepository;
-        this.userRepository = userRepository;
     }
 
     private final LecturerCourseRepository lecturerCourseRepository;
-    private final UserRepository userRepository;
+
+
+    @Override
+    public List<CourseResponse> getAllDisabledCourses() {
+        List<Course> courses = repository.findAllByIsActiveFalse();
+
+        return courses.stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
 
 
     @Override
@@ -73,44 +83,25 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
 
 
     @Override
-    public void deleteCourse(Integer id, boolean confirmed) {
+    @Transactional
+    public void disableCourse(Integer id, boolean confirmed) {
         if (!confirmed) {
-            throw new IllegalArgumentException("Action must be explicitly confirmed.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Deletion must be confirmed");
         }
 
-        Course course = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
+        Course course = repository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
         course.setActive(false);
-        repository.save(course);
+        lecturerCourseRepository.deactivateByCourseId(id);
     }
 
     @Override
-    @Transactional
-    public void assignExistingLectuererExistingCourse(AssignRequest request) {
-        // Fetch only if active
-        Course course = repository.findByIdAndIsActiveTrue(request.getCourse())
-                .orElseThrow(() -> new RuntimeException("Active course not found with id: " + request.getCourse()));
+    public void enableCourse(Integer id) {
 
-        //Fetch the user(no role validation) from the user table
-        User user = userRepository.findById(request.getLecturer())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + request.getLecturer()));
+        Course course = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
-        //Validate Role
-        if (user.getRole() != Role.LECTURER) {
-            throw new RuntimeException("User must be a LECTURER to be assigned to a course");
-        }
-
-        // is the course already assigned to him
-        if (lecturerCourseRepository.existsByLecturerIdAndCourseId(user.getId(), course.getId())) {
-            throw new RuntimeException("This lecturer is already assigned to this course");
-        }
-
-        LecturerCourse assignment = LecturerCourse.builder()
-                .lecturer(user)
-                .course(course)
-                .build();
-
-        lecturerCourseRepository.save(assignment);
+        course.setActive(true);
     }
 }

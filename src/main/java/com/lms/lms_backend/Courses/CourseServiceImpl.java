@@ -1,5 +1,6 @@
 package com.lms.lms_backend.Courses;
 
+import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse getCourseById(Integer id) {
         return repository.findByIdAndIsActiveTrue(id)
                 .map(this::mapToResponse)
-                .orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + id));
     }
 
     // Helper method to handle the conversion logic
