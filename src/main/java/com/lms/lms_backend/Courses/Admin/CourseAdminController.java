@@ -45,7 +45,7 @@ public class CourseAdminController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> enableCourse(
             @PathVariable Integer id) {
         service.enableCourse(id);

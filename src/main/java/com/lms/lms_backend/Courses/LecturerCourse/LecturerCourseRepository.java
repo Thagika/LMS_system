@@ -19,4 +19,6 @@ public interface LecturerCourseRepository extends JpaRepository<LecturerCourse ,
     void deactivateByCourseId(Integer courseId);
 
     boolean existsByLecturerIdAndCourseIdAndIsActiveTrue(UUID id, Integer id1);
+
+    boolean existsByLecturerIdAndCourseId(UUID id, Integer id1);
 }

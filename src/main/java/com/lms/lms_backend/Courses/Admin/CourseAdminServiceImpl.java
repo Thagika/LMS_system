@@ -3,10 +3,9 @@ package com.lms.lms_backend.Courses.Admin;
 import com.lms.lms_backend.Courses.*;
 import com.lms.lms_backend.Courses.LecturerCourse.LecturerCourseRepository;
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
-import com.lms.lms_backend.user.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -17,8 +16,7 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
 
     public CourseAdminServiceImpl(
             CourseRepository repository,
-            LecturerCourseRepository lecturerCourseRepository,
-            UserRepository userRepository) {
+            LecturerCourseRepository lecturerCourseRepository) {
 
         super(repository);
         this.lecturerCourseRepository = lecturerCourseRepository;
@@ -97,11 +95,11 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
     }
 
     @Override
+    @Transactional
     public void enableCourse(Integer id) {
 
         Course course = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
-
         course.setActive(true);
     }
 }

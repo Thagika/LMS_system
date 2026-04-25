@@ -26,6 +26,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/api/v1/course/**").hasAnyAuthority("STUDENT", "ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(

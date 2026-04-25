@@ -14,13 +14,16 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService{
 
 
     private final UserRepository repository;
 
-    public @Nullable List<UserResponse> findAllUserRole() {
-            return repository.findByRoleAndIsActiveTrue(Role.USER)
+    public @Nullable List<UserResponse> findAllWithRole(Role role) {
+        if (role == null) {
+            throw new IllegalArgumentException("Role cannot be null");
+        }
+            return repository.findByRoleAndIsActiveTrue(role)
                     .stream()
                     .map(user -> UserResponse.builder()
                             .id(user.getId())
@@ -50,5 +53,4 @@ public class UserService {
                 .email(user.getEmail())
                 .build();
     }
-
 }

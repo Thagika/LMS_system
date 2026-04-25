@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -24,6 +27,20 @@ public class GlobalExceptionHandler {
         body.put("status", HttpStatus.CONFLICT.value()); // 409 Conflict
 
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        if (ex.getRequiredType() != null && ex.getRequiredType().isEnum()) {
+            return ResponseEntity.badRequest().body("Request Denied");
+        }
+        return ResponseEntity.badRequest().body("Invalid parameter: " + ex.getName());
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException ex) {
+        return ResponseEntity.badRequest()
+                .body("Parameter '" + ex.getParameterName() + "' is missing or empty.");
     }
 
     @ExceptionHandler(ResponseStatusException.class)

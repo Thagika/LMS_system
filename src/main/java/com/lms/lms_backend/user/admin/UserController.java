@@ -18,8 +18,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> listAllUsers() {
-        return ResponseEntity.ok(userService.findAllUserRole());
+    public ResponseEntity<List<UserResponse>> listAllWithRole(
+            @RequestParam  Role role
+    ) {
+        return ResponseEntity.ok(userService.findAllWithRole(role));
     }
 
     @GetMapping("/{id}")
@@ -27,7 +29,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
-    @PutMapping("/{userId}/role")
+    @PatchMapping("/{userId}/role")
     public ResponseEntity<Void> assignRole(
             @PathVariable UUID userId,
             @RequestParam Role role) {
