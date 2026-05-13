@@ -15,7 +15,7 @@ Maven
 Installation
 Clone the repository
 
-git clone https://github.com/theekshana-nirmal/lms-backend.git
+git clone https://github.com/Thagika/lms_backend.git/
 cd lms-backend
 Build the project
 
