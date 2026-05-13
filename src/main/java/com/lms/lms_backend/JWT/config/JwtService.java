@@ -2,14 +2,13 @@ package com.lms.lms_backend.JWT.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.SecretKey;
-import java.security.PublicKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +17,11 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "2e128360bca0ce9836b6891db683a045e216e3b98d22e6e0daf55ee88cfc5c92";
+    @Value("${jwt.JWT_SECRET}")
+    private String secretKey;
 
+    @Value("${jwt.token.expiration-ms}")
+    private long tokenExpiration;
 
     public String extractUserEmail(String jwtToken) {
         return extractClaim(jwtToken , Claims::getSubject);
@@ -38,7 +40,7 @@ public class JwtService {
         return Jwts.builder().claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + tokenExpiration))
                 .signWith(getSignInKey() , Jwts.SIG.HS256).compact();
     }
 
@@ -64,7 +66,7 @@ public class JwtService {
     }
 
     private SecretKey getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

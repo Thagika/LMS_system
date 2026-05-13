@@ -1,6 +1,7 @@
 package com.lms.lms_backend.JWT.auth;
 
 
+import com.lms.lms_backend.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
+    private Role role;
 }
 

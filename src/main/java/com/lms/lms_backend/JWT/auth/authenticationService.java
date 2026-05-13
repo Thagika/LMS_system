@@ -37,7 +37,7 @@ public class authenticationService {
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().token(jwtToken).role(user.getRole()).build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -50,6 +50,6 @@ public class authenticationService {
                 .orElseThrow(() -> new UserNotFoundException("Account is inactive or does not exist."));
 
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().token(jwtToken).role(user.getRole()).build();
     }
 }
