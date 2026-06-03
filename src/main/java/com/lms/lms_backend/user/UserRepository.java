@@ -1,5 +1,6 @@
 package com.lms.lms_backend.user;
 
+import com.lms.lms_backend.user.dto.UserDetailsFetcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

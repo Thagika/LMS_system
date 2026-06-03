@@ -46,6 +46,7 @@ The system facilitates interaction between students and lecturers, streamlining 
 - **Class Rosters:** Teachers can view lists of all courses they teach and the students enrolled in them.
 
 ### 📝 Grading & Assessment
+-**regards to repeating exams:** the students can only make an max of 3 attempts to face the exam (this was done to avoid having to create a seperate table just for grades when the user repeats exams)
 - **Teacher Tools:** Interface for teachers to input marks for assignments, tests, and modules.
 - **Student Portal:** Dedicated grades page for students to track their academic performance across all courses.
 
