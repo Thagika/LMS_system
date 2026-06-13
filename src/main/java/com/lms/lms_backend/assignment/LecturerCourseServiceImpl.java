@@ -1,5 +1,6 @@
 package com.lms.lms_backend.assignment;
 
+import com.lms.lms_backend.assignment.dto.LecturerCourseRequest;
 import com.lms.lms_backend.assignment.dto.LecturerCourseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -36,13 +37,13 @@ public class LecturerCourseServiceImpl implements LecturerCourseService {
     }
 
 
-    protected LecturerCourseResponse mapToAssignmentResponse(LecturerCourse entity) {
+    protected LecturerCourseResponse mapToAssignmentResponse(LecturerCourseRequest projection) {
         return LecturerCourseResponse.builder()
-                .id(entity.getId())
-                .lecturerFirstName(entity.getLecturer().getFirstName())
-                .lecturerLastName(entity.getLecturer().getLastName())
-                .courseTitle(entity.getCourse().getTitle())
-                .courseCode(entity.getCourse().getCode())
+                .id(projection.getId())
+                .lecturerFirstName(projection.getLecturerFirstName()) // No nested .getLecturer() call needed!
+                .lecturerLastName(projection.getLecturerLastName())
+                .courseTitle(projection.getCourseTitle())
+                .courseCode(projection.getCourseCode())
                 .build();
     }
 }

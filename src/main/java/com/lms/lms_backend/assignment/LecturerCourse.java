@@ -27,5 +27,4 @@ public class LecturerCourse {
 
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean isActive;
-
 }
