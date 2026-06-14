@@ -6,7 +6,9 @@ import com.lms.lms_backend.courses.dto.AssignRequest;
 
 import java.util.List;
 
-public interface LecturerCourseAdminService extends LecturerCourseService {
+public interface LecturerCourseAdminService {
+
+    List<LecturerCourseResponse> getAllActiveAssignedCourseLecturers();
 
     List<LecturerCourseResponse> getAllInactiveAssignedCourseLecturers();
 

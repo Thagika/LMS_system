@@ -4,6 +4,7 @@ import com.lms.lms_backend.assignment.LecturerCourseRepository;
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.courses.dto.CourseResponse;
 import com.lms.lms_backend.courses.dto.CreateRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,30 +12,23 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-
 @Service
-public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseAdminService {
+@RequiredArgsConstructor
+public class CourseAdminServiceImpl implements CourseAdminService {
 
-    public CourseAdminServiceImpl(
-            CourseRepository repository,
-            LecturerCourseRepository lecturerCourseRepository) {
-
-        super(repository);
-        this.lecturerCourseRepository = lecturerCourseRepository;
-    }
-
+    private final CourseRepository repository;
     private final LecturerCourseRepository lecturerCourseRepository;
 
+    private final CourseMapper courseMapper;
 
     @Override
     public List<CourseResponse> getAllDisabledCourses() {
         List<Course> courses = repository.findAllByIsActiveFalse();
 
         return courses.stream()
-                .map(this::mapToResponse)
+                .map(courseMapper::mapToResponse)
                 .toList();
     }
-
 
     @Override
     public CourseResponse createCourse(CreateRequest request) {
@@ -47,7 +41,7 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
                 .build();
 
         Course savedCourse = repository.save(course);
-        return mapToResponse(savedCourse);
+        return courseMapper.mapToResponse(savedCourse);
     }
 
 
@@ -77,7 +71,7 @@ public class CourseAdminServiceImpl extends CourseServiceImpl implements CourseA
 
         // 3. Save the modified entity
         Course updatedCourse = repository.save(course);
-        return mapToResponse(updatedCourse);
+        return courseMapper.mapToResponse(updatedCourse);
     }
 
 

@@ -5,7 +5,7 @@ import com.lms.lms_backend.courses.dto.CreateRequest;
 
 import java.util.List;
 
-public interface CourseAdminService extends CourseService {
+public interface CourseAdminService{
         /**
      * Creates a new course record.
      * @param request Data transfer object containing course details.

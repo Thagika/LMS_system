@@ -1,7 +1,6 @@
-package com.lms.lms_backend.assignment.Student;
+package com.lms.lms_backend.assignment;
 
 import com.lms.lms_backend.assignment.dto.LecturerCourseResponse;
-import com.lms.lms_backend.assignment.LecturerCourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

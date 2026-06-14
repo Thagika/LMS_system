@@ -7,7 +7,6 @@ import java.util.List;
 public interface LecturerCourseService {
 
 //    getter in  LecturerCourseAdminController
-    List<LecturerCourseResponse> getAllActiveAssignedCourseLecturers();
 
     List<LecturerCourseResponse> findLectureCourseByKeyword(String keyword);
 }

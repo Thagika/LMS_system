@@ -9,6 +9,7 @@ import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.user.Role;
 import com.lms.lms_backend.user.User;
 import com.lms.lms_backend.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,30 +18,32 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class LecturerCourseAdminServiceImpl extends LecturerCourseServiceImpl implements LecturerCourseAdminService {
+@RequiredArgsConstructor
+public class LecturerCourseAdminServiceImpl implements LecturerCourseAdminService {
 
-    public LecturerCourseAdminServiceImpl(LecturerCourseRepository lecturerCourseRepository, CourseRepository repository, UserRepository userRepository) {
-        super(lecturerCourseRepository);
-        this.repository = repository;
-        this.userRepository = userRepository;
-    }
 
+    private final LecturerCourseRepository lecturerCourseRepository;
     private final CourseRepository repository;
     private final UserRepository userRepository;
 
+    private final LecturerCourseMapper courseMapper;
 
-
+    @Override
+    public List<LecturerCourseResponse> getAllActiveAssignedCourseLecturers() {
+        return lecturerCourseRepository.findAllByIsActiveTrue()
+                .stream()
+                .map(courseMapper::mapToAssignmentResponse) // Use your new DTO mapping logic(mapToAssignmentResponse)
+                .toList();
+    }
 
 
     @Override
     public List<LecturerCourseResponse> getAllInactiveAssignedCourseLecturers() {
         return lecturerCourseRepository.findAllByIsActiveFalse()
                 .stream()
-                .map(this::mapToAssignmentResponse)
+                .map(courseMapper::mapToAssignmentResponse)
                 .toList();
     }
-
-
 
     @Override
     @Transactional
