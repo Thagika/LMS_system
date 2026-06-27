@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
                                 .requestMatchers("/api/v1/course/**").hasAnyAuthority("STUDENT", "ADMIN")
                                 .requestMatchers("/api/v1/assigned-Courses/**").hasAnyAuthority("STUDENT")
+                                .requestMatchers("/api/v1/enroll/**").hasAnyAuthority("STUDENT")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(

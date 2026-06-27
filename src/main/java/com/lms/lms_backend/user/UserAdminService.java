@@ -15,4 +15,6 @@ public interface UserAdminService {
 
     User getActiveUserEntity(UUID id);
     User getActiveLecturerEntity(UUID id);
+
+    User getUserByEmail(String email);
 }

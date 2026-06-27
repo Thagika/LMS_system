@@ -9,4 +9,6 @@ public interface LecturerCourseService {
 //    getter in  LecturerCourseAdminController
 
     List<LecturerCourseResponse> findLectureCourseByKeyword(String keyword);
+
+    LecturerCourse getLecturerCourseEntity(Integer id);
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User , UUID> {
     Optional<User> findByEmailAndIsActiveTrue(String email);
     List<UserDetailsFetcher> findByRoleAndIsActiveTrue(Role role);
-    Optional<User> findByIdAndIsActiveTrue(UUID id);
+    <T> Optional<T> findByIdAndIsActiveTrue(UUID id, Class<T> type);
     Optional<User> findByIdAndRoleAndIsActiveTrue(UUID id, Role role);
 
     boolean existsByEmail(String email);

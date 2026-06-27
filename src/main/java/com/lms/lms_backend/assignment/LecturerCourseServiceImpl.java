@@ -1,5 +1,6 @@
 package com.lms.lms_backend.assignment;
 
+import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.assignment.dto.LecturerCourseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LecturerCourseServiceImpl implements LecturerCourseService {
 
-    private final LecturerCourseRepository lecturerCourseRepository;
+    private final LecturerCourseRepository Repository;
     private final LecturerCourseMapper courseMapper;
 
     @Override
@@ -22,10 +23,16 @@ public class LecturerCourseServiceImpl implements LecturerCourseService {
             return List.of();
         }
 
-        return lecturerCourseRepository.findByCourseCodeContainingIgnoreCase(keyword.trim())
+        return Repository.findByCourseCodeContainingIgnoreCase(keyword.trim())
                 .stream()
                 .map(courseMapper::mapToAssignmentResponse) //DTO mapping logic(mapToAssignmentResponse)
                 .toList();
+    }
+
+    @Override
+    public LecturerCourse getLecturerCourseEntity(Integer id) {
+        return Repository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Lecturer course not found with id: " + id));
     }
 
 }

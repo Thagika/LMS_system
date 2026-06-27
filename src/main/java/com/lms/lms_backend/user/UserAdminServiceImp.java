@@ -2,6 +2,7 @@ package com.lms.lms_backend.user;
 
 
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
+import com.lms.lms_backend.user.dto.UserDetailsFetcher;
 import com.lms.lms_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class UserAdminServiceImp implements UserAdminService {
 
     private final UserRepository repository;
+    private final UserMapper userMapper;
 
     public @Nullable List<UserResponse> findAllWithRole(Role role) {
         if (role == null) {
@@ -22,17 +24,12 @@ public class UserAdminServiceImp implements UserAdminService {
         }
             return repository.findByRoleAndIsActiveTrue(role)
                     .stream()
-                    .map(user -> UserResponse.builder()
-                            .id(user.getId())
-                            .firstname(user.getFirstName())
-                            .lastname(user.getLastName())
-                            .email(user.getEmail())
-                            .build())
+                    .map(userMapper::mapToAssignmentResponse)
                     .toList();
     }
 
     public void assignRole(UUID userId, Role role) {
-        User user = repository.findByIdAndIsActiveTrue(userId)
+        User user = repository.findByIdAndIsActiveTrue(userId , User.class)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         user.setRole(role);
@@ -41,7 +38,7 @@ public class UserAdminServiceImp implements UserAdminService {
 
     @Override
     public User getActiveUserEntity(UUID id) {
-        return repository.findByIdAndIsActiveTrue(id)
+        return repository.findByIdAndIsActiveTrue(id, User.class)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
     @Override
@@ -50,15 +47,15 @@ public class UserAdminServiceImp implements UserAdminService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found or is not a LECTURER with id: " + id));
     }
 
-    public UserResponse findUserById(UUID id) {
-        User user = repository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    @Override
+    public User getUserByEmail(String email) {
+        return repository.findByEmailAndIsActiveTrue(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    }
 
-        return UserResponse.builder()
-                .id(user.getId())
-                .firstname(user.getFirstName())
-                .lastname(user.getLastName())
-                .email(user.getEmail())
-                .build();
+    public UserResponse findUserById(UUID id) {
+        UserDetailsFetcher user = repository.findByIdAndIsActiveTrue(id, UserDetailsFetcher.class)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        return  userMapper.mapToAssignmentResponse(user);
     }
 }

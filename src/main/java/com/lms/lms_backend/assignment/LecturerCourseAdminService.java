@@ -20,6 +20,6 @@ public interface LecturerCourseAdminService {
 
     void replaceCourseLecturer(LecturerCourseUpdateRequest request, boolean confirmed);
 
-
     void deactivateAssignmentsForCourse(Integer courseId);
+
 }
