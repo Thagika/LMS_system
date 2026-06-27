@@ -81,4 +81,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(DeletionNotConfirmedException.class)
+    public ResponseEntity<Object> handleDeletionNotConfirmed(DeletionNotConfirmedException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+        body.put("status", HttpStatus.BAD_REQUEST.value()); // 400 Bad Request
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
 }

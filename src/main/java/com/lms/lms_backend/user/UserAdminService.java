@@ -12,4 +12,7 @@ public interface UserAdminService {
     @Nullable UserResponse findUserById(UUID id);
 
     void assignRole(UUID userId, Role role);
+
+    User getActiveUserEntity(UUID id);
+    User getActiveLecturerEntity(UUID id);
 }

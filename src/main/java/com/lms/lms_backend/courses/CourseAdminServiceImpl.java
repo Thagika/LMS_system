@@ -1,14 +1,13 @@
 package com.lms.lms_backend.courses;
 
-import com.lms.lms_backend.assignment.LecturerCourseRepository;
+import com.lms.lms_backend.ExceptionHandler.DeletionNotConfirmedException;
+import com.lms.lms_backend.assignment.LecturerCourseAdminService;
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.courses.dto.CourseResponse;
 import com.lms.lms_backend.courses.dto.CreateRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class CourseAdminServiceImpl implements CourseAdminService {
 
     private final CourseRepository repository;
-    private final LecturerCourseRepository lecturerCourseRepository;
+    private final LecturerCourseAdminService lecturerCourseAdminService;
 
     private final CourseMapper courseMapper;
 
@@ -79,14 +78,14 @@ public class CourseAdminServiceImpl implements CourseAdminService {
     @Transactional
     public void disableCourse(Integer id, boolean confirmed) {
         if (!confirmed) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Deletion must be confirmed");
+            throw new DeletionNotConfirmedException("Deletion must be confirmed");
         }
 
         Course course = repository.findByIdAndIsActiveTrue(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
         course.setActive(false);
-        lecturerCourseRepository.deactivateByCourseId(id);
+        lecturerCourseAdminService.deactivateAssignmentsForCourse(id);
     }
 
     @Override

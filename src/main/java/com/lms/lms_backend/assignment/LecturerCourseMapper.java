@@ -1,13 +1,13 @@
 package com.lms.lms_backend.assignment;
 
-import com.lms.lms_backend.assignment.dto.LecturerCourseRequest;
+import com.lms.lms_backend.assignment.dto.LecturerCourseProjection;
 import com.lms.lms_backend.assignment.dto.LecturerCourseResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LecturerCourseMapper {
 
-    public LecturerCourseResponse mapToAssignmentResponse(LecturerCourseRequest projection) {
+    public LecturerCourseResponse mapToAssignmentResponse(LecturerCourseProjection projection) {
         return LecturerCourseResponse.builder()
                 .id(projection.getId())
                 .lecturerFirstName(projection.getLecturerFirstName()) // No nested .getLecturer() call needed!

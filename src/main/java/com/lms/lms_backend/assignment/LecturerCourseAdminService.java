@@ -19,4 +19,7 @@ public interface LecturerCourseAdminService {
     void reassignCourseToLecturer(Integer id);
 
     void replaceCourseLecturer(LecturerCourseUpdateRequest request, boolean confirmed);
+
+
+    void deactivateAssignmentsForCourse(Integer courseId);
 }

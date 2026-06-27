@@ -1,6 +1,7 @@
 package com.lms.lms_backend.user;
 
 
+import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -36,6 +37,17 @@ public class UserAdminServiceImp implements UserAdminService {
 
         user.setRole(role);
         repository.save(user);
+    }
+
+    @Override
+    public User getActiveUserEntity(UUID id) {
+        return repository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+    }
+    @Override
+    public User getActiveLecturerEntity(UUID id) {
+        return repository.findByIdAndRoleAndIsActiveTrue(id, Role.LECTURER)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found or is not a LECTURER with id: " + id));
     }
 
     public UserResponse findUserById(UUID id) {

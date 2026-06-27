@@ -1,6 +1,6 @@
 package com.lms.lms_backend.assignment;
 
-import com.lms.lms_backend.assignment.dto.LecturerCourseRequest;
+import com.lms.lms_backend.assignment.dto.LecturerCourseProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface LecturerCourseRepository extends JpaRepository<LecturerCourse , Integer> {
-    List<LecturerCourseRequest> findAllByIsActiveTrue();
+    List<LecturerCourseProjection> findAllByIsActiveTrue();
 
-    List<LecturerCourseRequest> findAllByIsActiveFalse();
+    List<LecturerCourseProjection> findAllByIsActiveFalse();
 
     Optional<LecturerCourse> findByIdAndIsActiveTrue(Integer id);
     @Modifying
@@ -22,5 +22,5 @@ public interface LecturerCourseRepository extends JpaRepository<LecturerCourse ,
 
     boolean existsByLecturerIdAndCourseId(UUID id, Integer id1);
 
-    List<LecturerCourseRequest> findByCourseCodeContainingIgnoreCase(String keyword);
+    List<LecturerCourseProjection> findByCourseCodeContainingIgnoreCase(String keyword);
 }
