@@ -73,7 +73,6 @@ public class CourseAdminServiceImpl implements CourseAdminService {
         return courseMapper.mapToResponse(updatedCourse);
     }
 
-
     @Override
     @Transactional
     public void disableCourse(Integer id, boolean confirmed) {

@@ -13,11 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/assigned-Courses")
 @RequiredArgsConstructor
-public class StudentCourseController {
+public class LecturerCourseController {
 
     private final LecturerCourseService service;
     @GetMapping("/filter")
-    public ResponseEntity<List<LecturerCourseResponse>> searchLecCourse(@RequestParam("keyword") String keyword) {
+    public ResponseEntity<List<LecturerCourseResponse>> searchLecCourse(@RequestParam("code") String keyword) {
         List<LecturerCourseResponse> results = service.findLectureCourseByKeyword(keyword);
         return ResponseEntity.ok(results);
     }

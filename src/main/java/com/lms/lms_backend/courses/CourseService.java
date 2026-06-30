@@ -9,8 +9,6 @@ public interface CourseService {
 
     List<CourseResponse> getAllCourses();
 
-    CourseResponse getCourseById(Integer id);
-
     Course getActiveCourseEntity(Integer id);
 
 

@@ -21,10 +21,4 @@ public class CourseController {
     public ResponseEntity<List<CourseResponse>> getAllCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
-
-    // 2. Get a single course by ID
-    @GetMapping("/{id}")
-    public CourseResponse getCourseById(@PathVariable Integer id) {
-        return courseService.getCourseById(id);
-    }
 }

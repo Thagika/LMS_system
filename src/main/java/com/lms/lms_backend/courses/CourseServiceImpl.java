@@ -24,13 +24,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponse getCourseById(Integer id) {
-        return repository.findByIdAndIsActiveTrue(id)
-                .map(courseMapper::mapToResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + id));
-    }
-
-    @Override
     public Course getActiveCourseEntity(Integer id) {
         return repository.findByIdAndIsActiveTrue(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Active course not found with id: " + id));

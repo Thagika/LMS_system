@@ -1,8 +1,3 @@
-
-Architecture
-C4 Level 2 Container Diagram
-<img width="1840" height="2428" alt="LMS Container Diagram" src="https://github.com/user-attachments/assets/f45c412a-60aa-4376-92bc-6a5dc3c99d16" />
-
 Tech Stack
 Language: Java 21
 Framework: Spring Boot 4.0.6
@@ -25,6 +20,7 @@ Run the application
 ./mvnw spring-boot:run
 The application will start on the default port (usually 8080).
 
+
 # Learning Management System (LMS) - Backend
 
 ## Overview
@@ -35,7 +31,7 @@ The system facilitates interaction between students and lecturers, streamlining 
 ## Features
 
 ### 👥 User Management
--**Registration**: Secure sign-in/sign-up process for both Students and Lecturers.
+-**Registration**: Secure sign-in/sign-up process for both Students and Lecturers admins should be added manually by default all users will gain User role during registration and the Admins have to assign the roles based on the data they have about the users.
 -**Authentication**: Role-based login system (Student/Lecturer) with secure password handling.
 -**Profiles**: Persistent user profiles for personalized dashboards.
 
@@ -46,7 +42,7 @@ The system facilitates interaction between students and lecturers, streamlining 
 - **Class Rosters:** Teachers can view lists of all courses they teach and the students enrolled in them.
 
 ### 📝 Grading & Assessment
--**regards to repeating exams:** the students can only make an max of 3 attempts to face the exam (this was done to avoid having to create a seperate table just for grades when the user repeats exams)
+-**regards to repeating exams:** the students can only make max of 3 attempts to face the exam (this was done to avoid having to create a separate table just for grades when the user repeats exams)
 - **Teacher Tools:** Interface for teachers to input marks for assignments, tests, and modules.
 - **Student Portal:** Dedicated grades page for students to track their academic performance across all courses.
 
@@ -57,7 +53,7 @@ The system facilitates interaction between students and lecturers, streamlining 
 ## Architecture
 
 ### C4 Level 2 Container Diagram
-![C4 Level 2 Container Diagram](<img width="1840" height="2428" alt="LMS Container Diagram" src="https://github.com/user-attachments/assets/fc020d5b-5e95-4d1c-8f91-6fee9ad93bf9" />
+![C4 Level 2 Container Diagram](<img width="1840" height="2428" alt="LMS Container Diagram" src="https://github.com/user-attachments/assets/f45c412a-60aa-4376-92bc-6a5dc3c99d16" />
 )
 
 ## Tech Stack
