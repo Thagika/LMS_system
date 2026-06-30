@@ -22,5 +22,5 @@ public interface LecturerCourseRepository extends JpaRepository<LecturerCourse ,
 
     boolean existsByLecturerIdAndCourseId(UUID id, Integer id1);
 
-    List<LecturerCourseProjection> findByCourseCodeContainingIgnoreCase(String keyword);
+    List<LecturerCourseProjection> findByCourseCodeContainingIgnoreCaseAndIsActiveTrue(String keyword);
 }

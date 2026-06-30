@@ -23,7 +23,7 @@ public class LecturerCourseServiceImpl implements LecturerCourseService {
             return List.of();
         }
 
-        return Repository.findByCourseCodeContainingIgnoreCase(keyword.trim())
+        return Repository.findByCourseCodeContainingIgnoreCaseAndIsActiveTrue(keyword.trim())
                 .stream()
                 .map(courseMapper::mapToAssignmentResponse) //DTO mapping logic(mapToAssignmentResponse)
                 .toList();
