@@ -1,5 +1,6 @@
 package com.lms.lms_backend.security.jwt.config;
 
+import com.lms.lms_backend.user.User;
 import com.lms.lms_backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,7 @@ public class ApplicationConfig {
     private final UserRepository repository;
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> repository.findByEmailAndIsActiveTrue(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        return username -> repository.findByEmailAndIsActiveTrue(username, User.class).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 
     @Bean

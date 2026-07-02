@@ -1,6 +1,7 @@
 package com.lms.lms_backend.user;
 
 
+import com.lms.lms_backend.user.dto.UserRequest;
 import com.lms.lms_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,11 @@ public class UserAdminController {
         return ResponseEntity.ok(userService.findAllWithRole(role));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
-        return ResponseEntity.ok(userService.findUserById(id));
+    @PostMapping
+    public ResponseEntity<UserResponse> getUserByEmail(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(userService.findUserByEmail(userRequest));
     }
+
 
     @PatchMapping("/{userId}/role")
     public ResponseEntity<Void> assignRole(

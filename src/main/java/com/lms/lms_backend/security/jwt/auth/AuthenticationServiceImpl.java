@@ -8,6 +8,7 @@ import com.lms.lms_backend.security.jwt.auth.dto.RegisterRequest;
 import com.lms.lms_backend.user.Role;
 import com.lms.lms_backend.user.User;
 import com.lms.lms_backend.user.UserRepository;
+import com.lms.lms_backend.user.dto.UserDetailsFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getEmail(), request.getPassword()
                 )
         );
-        var user = repository.findByEmailAndIsActiveTrue(request.getEmail())
+        var user = repository.findByEmailAndIsActiveTrue(request.getEmail(), User.class)
                 .orElseThrow(() -> new UserNotFoundException("Account is inactive or does not exist."));
 
         var jwtToken = jwtService.generateToken(user);

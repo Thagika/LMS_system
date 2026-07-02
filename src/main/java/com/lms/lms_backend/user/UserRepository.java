@@ -8,11 +8,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User , UUID> {
-    Optional<User> findByEmailAndIsActiveTrue(String email);
+    <T> Optional<T> findByEmailAndIsActiveTrue(String email , Class<T> type);
     List<UserDetailsFetcher> findByRoleAndIsActiveTrue(Role role);
-    <T> Optional<T> findByIdAndIsActiveTrue(UUID id, Class<T> type);
+    Optional<User> findByIdAndIsActiveTrue(UUID id);
     Optional<User> findByIdAndRoleAndIsActiveTrue(UUID id, Role role);
-
     boolean existsByEmail(String email);
 
 }

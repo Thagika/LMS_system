@@ -3,6 +3,7 @@ package com.lms.lms_backend.user;
 
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.user.dto.UserDetailsFetcher;
+import com.lms.lms_backend.user.dto.UserRequest;
 import com.lms.lms_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -28,8 +29,10 @@ public class UserAdminServiceImp implements UserAdminService {
                     .toList();
     }
 
+
+
     public void assignRole(UUID userId, Role role) {
-        User user = repository.findByIdAndIsActiveTrue(userId , User.class)
+        User user = repository.findByIdAndIsActiveTrue(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         user.setRole(role);
@@ -38,7 +41,7 @@ public class UserAdminServiceImp implements UserAdminService {
 
     @Override
     public User getActiveUserEntity(UUID id) {
-        return repository.findByIdAndIsActiveTrue(id, User.class)
+        return repository.findByIdAndIsActiveTrue(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
     @Override
@@ -49,13 +52,15 @@ public class UserAdminServiceImp implements UserAdminService {
 
     @Override
     public User getUserByEmail(String email) {
-        return repository.findByEmailAndIsActiveTrue(email)
+        return repository.findByEmailAndIsActiveTrue(email, User.class)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
     }
 
-    public UserResponse findUserById(UUID id) {
-        UserDetailsFetcher user = repository.findByIdAndIsActiveTrue(id, UserDetailsFetcher.class)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        return  userMapper.mapToAssignmentResponse(user);
+    @Override
+    public @Nullable UserResponse findUserByEmail(UserRequest userRequest) {
+
+        UserDetailsFetcher user = repository.findByEmailAndIsActiveTrue(userRequest.getEmail(), UserDetailsFetcher.class)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userRequest.getEmail()));
+        return userMapper.mapToAssignmentResponse(user);
     }
 }
