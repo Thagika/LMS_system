@@ -34,7 +34,7 @@ public class JwtService {
     }
     //used for refreshing the token as it wouldn't need extra claims
     public String generateToken(AppUserDetails userDetails) {
-        return generateToken(new java.util.HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, AppUserDetails userDetails) {

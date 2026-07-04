@@ -1,7 +1,5 @@
 package com.lms.lms_backend.security.jwt.auth.dto;
 
-
-import com.lms.lms_backend.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
