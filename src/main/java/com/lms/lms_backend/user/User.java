@@ -1,5 +1,6 @@
 package com.lms.lms_backend.user;
 
+import com.lms.lms_backend.security.jwt.config.dto.AppUserDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -7,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -22,7 +22,7 @@ import java.util.UUID;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User implements AppUserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -61,12 +61,17 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String getRoleName() {
+        return this.role.name();
+    }
+
+    @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return AppUserDetails.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return AppUserDetails.super.isEnabled();
     }
 }

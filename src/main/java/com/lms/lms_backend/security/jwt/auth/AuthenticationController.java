@@ -1,5 +1,6 @@
 package com.lms.lms_backend.security.jwt.auth;
 
+import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationRequest;
 import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationResponse;
 import com.lms.lms_backend.security.jwt.auth.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;

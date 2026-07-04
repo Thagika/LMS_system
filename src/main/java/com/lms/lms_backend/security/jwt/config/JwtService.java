@@ -1,5 +1,6 @@
 package com.lms.lms_backend.security.jwt.config;
 
+import com.lms.lms_backend.security.jwt.config.dto.AppUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -32,16 +33,19 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
     //used for refreshing the token as it wouldn't need extra claims
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(AppUserDetails userDetails) {
+        return generateToken(new java.util.HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String , Object> extraClaims , UserDetails userDetails){
-        return Jwts.builder().claims(extraClaims)
+    public String generateToken(Map<String, Object> extraClaims, AppUserDetails userDetails) {
+        return Jwts.builder()
+                .claims(extraClaims)
                 .subject(userDetails.getUsername())
+                .claim("role", userDetails.getRoleName())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + tokenExpiration))
-                .signWith(getSignInKey() , Jwts.SIG.HS256).compact();
+                .signWith(getSignInKey(), Jwts.SIG.HS256)
+                .compact();
     }
 
     public boolean isTokenValid(String jwtToken , UserDetails userDetails){
