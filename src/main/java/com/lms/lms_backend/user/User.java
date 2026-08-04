@@ -2,6 +2,7 @@ package com.lms.lms_backend.user;
 
 import com.lms.lms_backend.security.jwt.config.dto.AppUserDetails;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,13 +28,18 @@ public class User implements AppUserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @NotBlank(message = "Username cannot be empty")
     private String firstName;
+    @NotBlank(message = "Username cannot be empty")
     private String lastName;
 
     @Column(unique = true)
+    @NotBlank(message = "Email is required")
     private String email;
 
+    @NotBlank(message = "Password is required")
     private String password;
+
     @CreationTimestamp
     @Column(name = "created_date", updatable = false, nullable = false)
 

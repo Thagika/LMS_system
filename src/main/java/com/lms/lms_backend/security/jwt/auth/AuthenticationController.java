@@ -3,6 +3,7 @@ package com.lms.lms_backend.security.jwt.auth;
 import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationRequest;
 import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationResponse;
 import com.lms.lms_backend.security.jwt.auth.dto.RegisterRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody @Valid RegisterRequest request
     ){
     return ResponseEntity.ok(service.register(request));
     }
@@ -31,4 +32,3 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 }
-
