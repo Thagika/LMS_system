@@ -1,6 +1,6 @@
 package com.lms.lms_backend.user;
 
-import com.lms.lms_backend.security.jwt.config.dto.AppUserDetails;
+import com.lms.lms_backend.security.jwt.dto.AppUserDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

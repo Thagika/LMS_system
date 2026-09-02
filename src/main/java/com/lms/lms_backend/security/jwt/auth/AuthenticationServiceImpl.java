@@ -3,7 +3,7 @@ package com.lms.lms_backend.security.jwt.auth;
 import com.lms.lms_backend.ExceptionHandler.EmailAlreadyExistsException;
 import com.lms.lms_backend.ExceptionHandler.UserNotFoundException;
 import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationRequest;
-import com.lms.lms_backend.security.jwt.config.JwtService;
+import com.lms.lms_backend.security.jwt.JwtService;
 import com.lms.lms_backend.security.jwt.auth.dto.AuthenticationResponse;
 import com.lms.lms_backend.security.jwt.auth.dto.RegisterRequest;
 import com.lms.lms_backend.user.Role;

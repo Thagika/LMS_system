@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: .
+    env_file: .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    volumes:
+       - ./target:/app/target
+
+  localstack:          #  added for local development to see if AWS functionality works
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+    volumes:
+      - "./localstack:/var/lib/localstack"
