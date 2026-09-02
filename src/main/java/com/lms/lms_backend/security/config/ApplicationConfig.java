@@ -1,4 +1,4 @@
-package com.lms.lms_backend.security.jwt.config;
+package com.lms.lms_backend.security.config;
 
 import com.lms.lms_backend.user.User;
 import com.lms.lms_backend.user.UserRepository;
@@ -37,10 +37,8 @@ public class ApplicationConfig {
         return config.getAuthenticationManager();
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
     }
-
 }

@@ -1,5 +1,6 @@
-package com.lms.lms_backend.security.jwt.config;
+package com.lms.lms_backend.security.config;
 
+import com.lms.lms_backend.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
