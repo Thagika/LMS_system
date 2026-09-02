@@ -1,7 +1,7 @@
-package com.lms.lms_backend.Enrollment;
+package com.lms.lms_backend.enrollment;
 
 
-import com.lms.lms_backend.Enrollment.dto.EnrollmentResponse;
+import com.lms.lms_backend.enrollment.dto.EnrollmentResponse;
 import com.lms.lms_backend.ExceptionHandler.ResourceNotFoundException;
 import com.lms.lms_backend.assignment.LecturerCourse;
 import com.lms.lms_backend.assignment.LecturerCourseService;

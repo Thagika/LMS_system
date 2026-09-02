@@ -1,6 +1,6 @@
-package com.lms.lms_backend.Enrollment;
+package com.lms.lms_backend.enrollment;
 
-import com.lms.lms_backend.Enrollment.dto.EnrollmentResponse;
+import com.lms.lms_backend.enrollment.dto.EnrollmentResponse;
 import com.lms.lms_backend.assignment.dto.LecturerCourseUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

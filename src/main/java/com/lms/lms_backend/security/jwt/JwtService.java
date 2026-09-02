@@ -1,6 +1,6 @@
-package com.lms.lms_backend.security.jwt.config;
+package com.lms.lms_backend.security.jwt;
 
-import com.lms.lms_backend.security.jwt.config.dto.AppUserDetails;
+import com.lms.lms_backend.security.jwt.dto.AppUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

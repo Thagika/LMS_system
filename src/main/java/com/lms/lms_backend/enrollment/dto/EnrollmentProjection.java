@@ -1,4 +1,4 @@
-package com.lms.lms_backend.Enrollment.dto;
+package com.lms.lms_backend.enrollment.dto;
 
 public interface EnrollmentProjection {
     Integer getId();

@@ -1,4 +1,4 @@
-package com.lms.lms_backend.Enrollment;
+package com.lms.lms_backend.enrollment;
 
 import com.lms.lms_backend.assignment.LecturerCourse;
 import com.lms.lms_backend.user.User;

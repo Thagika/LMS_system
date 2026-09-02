@@ -1,7 +1,7 @@
-package com.lms.lms_backend.Enrollment;
+package com.lms.lms_backend.enrollment;
 
 
-import com.lms.lms_backend.Enrollment.dto.EnrollmentProjection;
+import com.lms.lms_backend.enrollment.dto.EnrollmentProjection;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
