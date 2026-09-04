@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/V1/media")
+@RequestMapping("/api/v1/media")
 public class MediaUploadController {
 
     private final MediaUploadService mediaUploadService;
