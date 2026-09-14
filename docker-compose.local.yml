@@ -1,36 +1,60 @@
 services:
   backend:
     image: lms-backend:latest
-    build: .
+    build:
+      context: .
+      target: local
     env_file: .env
     environment:
       - SPRING_PROFILES_ACTIVE=local
-      - APP_CORS_ALLOWED_ORIGINS=http://localhost:3000
     volumes:
-       - ./target:/app/target
+      - .:/app
+      - ~/.m2:/root/.m2
     ports:
       - "8080:8080"
+    networks:
+      - lms_network
+    depends_on:
+      db:
+        condition: service_healthy
 
   localstack:          #  added for local development to see if AWS functionality works
-    image: localstack/localstack
+    image: localstack/localstack:4.14.0
+    container_name: lms-localstack
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=s3
+      - AWS_DEFAULT_REGION=${AWS_REGION}
     volumes:
       - "./localstack:/var/lib/localstack"
+      - "./localstack-init:/etc/localstack/init/ready.d"
+    networks:
+      - lms_network
 
   db:
     image: postgres:15
+    container_name: lms-postgres
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/test/resources/init-seed.sql:/docker-entrypoint-initdb.d/user-data.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
+    networks:
+      - lms_network
+
+volumes:
+  postgres_data:
+
+networks:
+  lms_network:
+    driver: bridge

@@ -36,6 +36,7 @@ build/
 .agents/
 src/main/resources/application.yml
 .env
+.env.local
 
 /graphify-out/
 /.mvn/
