@@ -19,7 +19,7 @@ public class MediaUploadController {
 
     private final MediaUploadService mediaUploadService;
 
-    @PostMapping("/{courseId}/media/upload")
+    @PostMapping("/{courseId}/upload")
     public ResponseEntity<MediaLinker> uploadMedia(
             @PathVariable Integer courseId,
             @RequestParam("file") MultipartFile file,

@@ -18,11 +18,11 @@ services:
       db:
         condition: service_healthy
 
-  localstack:          #  added for local development to see if AWS functionality works
+  localstack:
     image: localstack/localstack:4.14.0
     container_name: lms-localstack
     ports:
-      - "4566:4566"
+      - "127.0.0.1:4566:4566"
     environment:
       - AWS_DEFAULT_REGION=${AWS_REGION}
     volumes:
