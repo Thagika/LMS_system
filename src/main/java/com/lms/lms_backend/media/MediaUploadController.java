@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,6 +21,7 @@ import java.math.BigDecimal;
 public class MediaUploadController {
 
     private final MediaUploadService mediaUploadService;
+    private static final Logger logger = LoggerFactory.getLogger(MediaUploadController.class);
 
     @PostMapping("/{courseId}/upload")
     public ResponseEntity<MediaLinker> uploadMedia(
@@ -34,11 +37,10 @@ public class MediaUploadController {
             MediaLinker result = mediaUploadService.uploadMediaToCourse(courseId, file, categoryName, orderIndex, userDetails);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (IOException e) {
-            System.out.println(">>> [Upload Error] IOException occurred: " + e.getMessage());
+            logger.error("[Upload Error] Input/Output exception occurred during file processing!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            System.out.println(">>> [Upload Error] General or AWS Exception occurred!");
-            e.printStackTrace(); // This prints the entire stack trace to your terminal logs
+            logger.error("[Upload Error] General or AWS Exception occurred!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
