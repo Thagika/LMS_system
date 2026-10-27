@@ -26,7 +26,7 @@ public class MediaLinker {
     @Column(name = "order_index", nullable = false, columnDefinition = "NUMERIC", precision = 10, scale = 2)
     private BigDecimal orderIndex; // Handles the sequence order on each category(1, 2, 3...)
 
-    private String CategoryName; //since 1 topic can have mutli vids this makes sure all will be grouped
+    private String categoryName; //since 1 topic can have mutli vids this makes sure all will be grouped
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)

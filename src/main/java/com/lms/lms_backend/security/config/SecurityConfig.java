@@ -51,6 +51,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/api/v1/media/**").hasAnyAuthority("LECTURER", "ADMIN")
                                 .requestMatchers("/api/v1/course/**").hasAnyAuthority("STUDENT", "ADMIN")
                                 .requestMatchers("/api/v1/assigned-Courses/**").hasAnyAuthority("STUDENT")
                                 .requestMatchers("/api/v1/enroll/**").hasAnyAuthority("STUDENT")

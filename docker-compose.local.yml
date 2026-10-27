@@ -27,6 +27,7 @@ services:
       - AWS_DEFAULT_REGION=${AWS_REGION}
     volumes:
       - "./localstack:/var/lib/localstack"
+      - "./localstack:/var/lib/localstack/state" #keep data permanently
       - "./localstack-init:/etc/localstack/init/ready.d"
     networks:
       - lms_network

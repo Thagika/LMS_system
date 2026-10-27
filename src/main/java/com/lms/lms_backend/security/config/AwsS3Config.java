@@ -8,6 +8,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
@@ -29,14 +30,24 @@ public class AwsS3Config {
 
     @Bean
     public S3Client s3Client() {
+//        System.out.println(">>> [S3 Client Config] Configured Region: " + region);
+
         S3ClientBuilder builder = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)));
 
         if (endpoint != null && !endpoint.isBlank()) {
+
+//            System.out.println(">>> [S3 Client Config] Target Endpoint Override: " + endpoint);
             builder.endpointOverride(URI.create(endpoint));
+            builder.serviceConfiguration(S3Configuration.builder()
+                    .pathStyleAccessEnabled(true)
+                    .build());
         }
+//        else {
+//            System.out.println(">>> [S3 Client Config] No endpoint override detected. Using standard AWS Cloud S3.");
+//        }
 
         return builder.build();
     }
@@ -50,6 +61,9 @@ public class AwsS3Config {
 
         if (endpoint != null && !endpoint.isBlank()) {
             builder.endpointOverride(URI.create(endpoint));
+            builder.serviceConfiguration(S3Configuration.builder()
+                    .pathStyleAccessEnabled(true)
+                    .build());
         }
 
         return builder.build();

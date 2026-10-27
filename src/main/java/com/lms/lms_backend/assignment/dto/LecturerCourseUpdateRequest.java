@@ -12,6 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LecturerCourseUpdateRequest {
-    Integer LecturerCourse;
+    Integer lecturerCourse;
     UUID lecturer;
 }
